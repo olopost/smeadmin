@@ -1,7 +1,12 @@
 import setuptools
 
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
+
+
+with open("requirements.txt", "r") as rp:
+    req = rp.read()
 
 setuptools.setup(
     name="smeadmin",
@@ -19,6 +24,7 @@ setuptools.setup(
             'templates/*.html',
         ],
     },
+    install_reqs=req,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
