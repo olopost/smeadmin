@@ -10,7 +10,7 @@ with open("requirements.txt", "r") as rp:
 
 setuptools.setup(
     name="smeadmin",
-    version="0.0.2",
+    version="0.0.3",
     author="Samuel MEYNARD",
     author_email="samuel@meyn.fr",
     description="SME admin tools",
