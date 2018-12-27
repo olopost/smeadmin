@@ -3,14 +3,9 @@ from django.views.generic.base import TemplateView
 from django.urls import reverse
 from django.conf.urls import url
 from django.http import HttpResponse
-from django.shortcuts import redirect
-from datetime import datetime
-import time
 import logging
 import ssl
-from time import mktime
-from django.views.decorators.csrf import csrf_exempt
-
+from .models import CarnetDAdresse
 from wagtail.core import hooks
 from wagtail.admin.menu import MenuItem
 
@@ -19,6 +14,13 @@ if hasattr(ssl, '_create_unverified_context'):
 
 logger = logging.getLogger('smeadmin')
 
+
+class CarnetDAdresseAdmin(ModelAdmin):
+    model = CarnetDAdresse
+    menu_label = "SME - Carnet d'adresse"
+    menu_icon = "mail"
+
+modeladmin_register(CarnetDAdresseAdmin)
 
 @hooks.register('register_admin_menu_item')
 def register_menu_item():
@@ -60,6 +62,7 @@ class EnveloppeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Gestion des enveloppes"
+        context['carnet'] = CarnetDAdresse.objects.all()
         return context
 
 
