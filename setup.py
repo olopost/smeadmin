@@ -17,7 +17,6 @@ setuptools.setup(
     package_data={
         'smeadmin': [
             'templates/*.html',
-            'templates/base/*.html'
         ],
     },
     classifiers=[

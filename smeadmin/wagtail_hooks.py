@@ -27,7 +27,7 @@ def register_menu_item():
 
 class EnveloppeView(TemplateView):
 
-    template_name = "templates/env.html"
+    template_name = "env.html"
 
     def post(self, request, *args, **kwargs):
         response = HttpResponse(content_type='application/pdf')
