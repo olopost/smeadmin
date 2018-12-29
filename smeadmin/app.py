@@ -1,22 +1,39 @@
+#! /bin/env python
+
+# Utilisation de trois fichiers :
+# entete.txt pour le nom de l émetteur
+# dest.txt le destinataire
+# base.txt contenu
 
 def main():
     from reportlab.lib.units import mm
+    from reportlab.lib.pagesizes import A4
     from reportlab.pdfgen import canvas
+    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.enums import TA_JUSTIFY, TA_RIGHT, TA_LEFT
 
-    canvas = canvas.Canvas('env.pdf')
-    canvas.setFont("Helvetica", 10)
-    canvas.setPageSize((220 * mm, 110 * mm))
-    canvas.drawString(10 * mm, 100 * mm, "Samuel MEYNARD")
-    canvas.drawString(10 * mm, 95 * mm, "12E rue MARAT")
-    canvas.drawString(10 * mm, 90 * mm, "78210 Saint Cyr L'école")
+    doc = SimpleDocTemplate("letter.pdf", pagesize=A4)
 
-    canvas.setFont("Helvetica", 12)
-    canvas.drawString(130 * mm, 40 * mm, "OVH - Service prélèvement bancaire")
-    canvas.drawString(130 * mm, 35 * mm, "2 rue Kellermann")
-    canvas.drawString(130 * mm, 30 * mm, "BP 80157")
-    canvas.drawString(130 * mm, 25 * mm, "59053 ROUBAIX")
+    Env = []
 
-    canvas.save()
+    with open("entete.txt") as entete:
+        mystyle = getSampleStyleSheet()
+        right = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=300, parent=mystyle['Normal'])
+        Env.append(Paragraph(entete.read().replace('\n', '<br/>'), right))
+        Env.append(Spacer(1, 12 * mm))
+    with open("dest.txt") as entete:
+        mystyle = getSampleStyleSheet()
+        dest = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=20 * mm, parent=mystyle['Normal'])
+        Env.append(Paragraph("À l'attention de : " + entete.read().replace('\n', '<br/>'), dest))
+        Env.append(Spacer(1, 12 * mm))
+
+
+    with open("base.txt") as entete:
+        mystyle = getSampleStyleSheet()
+        base = ParagraphStyle(name='Base', alignment=TA_JUSTIFY, leftIndent=0, parent=mystyle['Normal'])
+        Env.append(Paragraph(entete.read().replace('\n', '<br/>'), base))
+    doc.build(Env)
 
 
 if __name__ == "__main__":

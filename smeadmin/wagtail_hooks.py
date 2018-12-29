@@ -66,8 +66,60 @@ class EnveloppeView(TemplateView):
         return context
 
 
+@hooks.register('register_admin_menu_item')
+def register_menu_item():
+    return MenuItem('SME - Lettre', reverse("view_letter"), classnames='icon icon-edit', order=10000)
+
+
+class LettreView(TemplateView):
+
+    template_name = "letter.html"
+
+    def post(self, request, *args, **kwargs):
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="letter.pdf"'
+        from reportlab.lib.units import mm
+        from reportlab.lib.pagesizes import A4
+        from reportlab.pdfgen import canvas
+        from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+        from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+        from reportlab.lib.enums import TA_JUSTIFY, TA_RIGHT, TA_LEFT
+
+        doc = SimpleDocTemplate(response, pagesize=A4)
+
+        Env = []
+
+        entete = request.POST['exp']
+        mystyle = getSampleStyleSheet()
+        right = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=300, parent=mystyle['Normal'])
+        Env.append(Paragraph(entete.replace('\n', '<br/>'), right))
+        Env.append(Spacer(1, 12 * mm))
+
+        entete = request.POST['dest']
+        mystyle = getSampleStyleSheet()
+        dest = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=20 * mm, parent=mystyle['Normal'])
+        Env.append(Paragraph("À l'attention de : " + entete.replace('\n', '<br/>'), dest))
+        Env.append(Spacer(1, 12 * mm))
+
+        entete = request.POST['base']
+        mystyle = getSampleStyleSheet()
+        base = ParagraphStyle(name='Base', alignment=TA_JUSTIFY, leftIndent=0, parent=mystyle['Normal'])
+        Env.append(Paragraph(entete.replace('\n', '<br/>'), base))
+        doc.build(Env)
+
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Gestion des lettres"
+        context['carnet'] = CarnetDAdresse.objects.all()
+        return context
+
+
+
 @hooks.register('register_admin_urls')
 def urlconf():
     return [
         url(r'^smeadmin/$', EnveloppeView.as_view(), name='view_env'),
+        url(r'^smeadmin-letter/$', LettreView.as_view(), name='view_letter'),
     ]

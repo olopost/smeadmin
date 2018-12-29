@@ -1,0 +1,62 @@
+{% extends 'wagtailadmin/base.html' %}
+
+{% block content %}
+
+  <header class="">
+    <div class="row nice-padding">
+        <div class="left">
+            <div class="col header-title">
+                <h1 class="icon icon-mail">{{ title }}</h1>
+            </div>
+        </div>
+        <div class="right"></div>
+    </div>
+  </header>
+
+  <div class="nice-padding">
+  <h2>Génération d'une lettre</h2>
+<form method="post" action=".">
+    <table>
+        <thead><td>Expéditeur</td><td>Destinataire (à l'attention de :)</td></thead>
+        <tr>
+            <td>
+                <select onchange="updateexp()" id="carnetexp" name="carnetexp">
+                    {% for add in carnet %}
+                        <option value="{{ add.address }}">{{ add }}</option>
+                    {% endfor %}
+                </select>
+                <textarea name="exp" id="exp" rows="4" cols="30">
+Samuel MEYNARD
+12E rue MARAT
+78210 Saint Cyr l'École
+            </textarea></td>
+            <td valign="top">
+            <input type="text" id="dest" name="dest"/>
+            </td>
+        </tr>
+    </table><table>
+    <tr><td>Contenu</td></tr>
+    <tr>
+        <td><textarea rows="20" cols="80" name="base" id="base">
+
+        </textarea></td>
+    </tr>
+    </table>
+  {% csrf_token %}
+  {{ database_backup_form.as_p }}
+  <div class="submit-row">
+  <input type="submit" class="button" name="gen_env" value="Générer l'enveloppe">
+  </div>
+</form>
+{% endblock content %}
+{% block extra_js %}
+    <script>
+    function updatedest() {
+    $('#dest').val($('#carnet').attr('selected', true).val());
+    }
+    function updateexp() {
+        $('#exp').val($('#carnetexp').attr('selected', true).val());
+    }
+
+    </script>
+{% endblock %}
