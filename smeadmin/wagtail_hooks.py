@@ -93,6 +93,13 @@ class LettreView(TemplateView):
         mystyle = getSampleStyleSheet()
         right = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=300, parent=mystyle['Normal'])
         Env.append(Paragraph(entete.replace('\n', '<br/>'), right))
+        Env.append(Spacer(1, 3 * mm))
+        right = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=300, parent=mystyle['Normal'])
+        from datetime import datetime
+        t = datetime.now()
+        import locale
+        locale.setlocale(locale.LC_ALL, "fr_FR")
+        Env.append(Paragraph("À Saint-Cyr-L'École, le " + t.strftime("%a %d %b %Y"), right))
         Env.append(Spacer(1, 12 * mm))
 
         entete = request.POST['dest']

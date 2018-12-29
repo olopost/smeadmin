@@ -31,7 +31,8 @@ Samuel MEYNARD
 78210 Saint Cyr l'École
             </textarea></td>
             <td valign="top">
-            <input type="text" id="dest" name="dest"/>
+            <input type="text" id="dest" name="dest"/><br/>
+                Localisation : <input type="text" id="dest" name="loc" value="Saint-Cyr-L'École"/><br/>
             </td>
         </tr>
     </table><table>
@@ -45,7 +46,7 @@ Samuel MEYNARD
   {% csrf_token %}
   {{ database_backup_form.as_p }}
   <div class="submit-row">
-  <input type="submit" class="button" name="gen_env" value="Générer l'enveloppe">
+  <input type="submit" class="button" name="gen_env" value="Générer la lettre">
   </div>
 </form>
 {% endblock content %}

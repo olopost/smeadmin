@@ -21,6 +21,14 @@ def main():
         mystyle = getSampleStyleSheet()
         right = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=300, parent=mystyle['Normal'])
         Env.append(Paragraph(entete.read().replace('\n', '<br/>'), right))
+        Env.append(Spacer(1, 3 * mm))
+        mystyle = getSampleStyleSheet()
+        right = ParagraphStyle(name='Justify', alignment=TA_LEFT, leftIndent=300, parent=mystyle['Normal'])
+        from datetime import datetime
+        t = datetime.now()
+        import locale
+        locale.setlocale(locale.LC_ALL, "fr_FR")
+        Env.append(Paragraph("À Saint-Cyr-L'École, le " + t.strftime("%a %d %b %Y"), right))
         Env.append(Spacer(1, 12 * mm))
     with open("dest.txt") as entete:
         mystyle = getSampleStyleSheet()
