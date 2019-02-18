@@ -99,7 +99,7 @@ class LettreView(TemplateView):
         t = datetime.now()
         import locale
         locale.setlocale(locale.LC_ALL, "fr_FR")
-        Env.append(Paragraph("À Saint-Cyr-L'École, le " + t.strftime("%a %d %b %Y"), right))
+        Env.append(Paragraph("À " + request.POST['loc'] + ", le " + t.strftime("%a %d %b %Y"), right))
         Env.append(Spacer(1, 12 * mm))
 
         entete = request.POST['dest']
@@ -109,6 +109,7 @@ class LettreView(TemplateView):
         Env.append(Spacer(1, 12 * mm))
 
         entete = request.POST['base']
+        entete = entete.replace('$DEST$', request.POST['dest'])
         mystyle = getSampleStyleSheet()
         base = ParagraphStyle(name='Base', alignment=TA_JUSTIFY, leftIndent=0, parent=mystyle['Normal'])
         Env.append(Paragraph(entete.replace('\n', '<br/>'), base))
