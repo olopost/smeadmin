@@ -2,7 +2,7 @@
 Wagtail extension for add bunch of tools
 
 ## Capture
-![capture](doc/django_view.png)
+![capture](smeadmin/doc/django_view.png)
 
 ## installation
 add the following line to your requirements.txt file :
@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'wagtail.sites',
     'wagtail.users',
     'wagtail.snippets',
-    'wagtail.documents',
+    'wagtail.smeadmin/documents',
     'wagtail.images',
     'wagtail.search',
     'wagtail.contrib.modeladmin',
@@ -48,14 +48,14 @@ At this hour, smeadmin provide some tool to create and print physical mail
 
 1. First in the menu is Carnet d'Adresse
 This tool manage identity and postal address of sender and recipient
- -![address book](doc/addressbook.png)
+ -![address book](smeadmin/doc/addressbook.png)
  2. Second in the menu is enveloppe tool
  this provide an interface to create pdf for DL format envelop
- ![generate_env](doc/generate_env.png)
- ![enveloppe](doc/enveloppe.png)
+ ![generate_env](smeadmin/doc/generate_env.png)
+ ![enveloppe](smeadmin/doc/enveloppe.png)
  3. Third is letter generation
  That generate letter french format
- ![letter](doc/lettre.png)
+ ![letter](smeadmin/doc/lettre.png)
  
 
 good usage
