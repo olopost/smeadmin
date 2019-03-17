@@ -15,7 +15,7 @@ setuptools.setup(
     author_email="samuel@meyn.fr",
     description="SME admin tools",
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    #long_description_content_type="text/markdown",
     url="https://github.com/olopost/smeadmin",
     packages=setuptools.find_packages(),
     package_dir={'smeadmin': 'smeadmin'},
