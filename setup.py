@@ -24,7 +24,7 @@ setuptools.setup(
             'templates/*.html',
         ],
     },
-    install_reqs=req,
+    install_requires=req,
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
