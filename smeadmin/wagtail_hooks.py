@@ -13,7 +13,7 @@ if hasattr(ssl, '_create_unverified_context'):
 
 logger = logging.getLogger('smeadmin')
 
-
+from django.contrib.auth.models import Permission
 
 
 class CarnetDAdresseAdmin(ModelAdmin):
@@ -77,6 +77,8 @@ class EnveloppeView(TemplateView):
     def get_menu_item(self, order=None):
         return MenuItem('SME - Enveloppe', reverse("view_env"), classnames='icon icon-mail', order=10000)
 
+    def get_permissions_for_registration(self):
+        return Permission.objects.none()
 
 
 
@@ -144,6 +146,10 @@ class LettreView(TemplateView):
 
     def get_menu_item(self, order=None):
         return MenuItem('SME - Lettre', reverse("view_lettre"), classnames='icon icon-edit', order=10000)
+
+    def get_permissions_for_registration(self):
+        return Permission.objects.none()
+
 
 class SMEAdminGroup(ModelAdminGroup):
     """
